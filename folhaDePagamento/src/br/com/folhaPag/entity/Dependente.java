@@ -7,6 +7,8 @@ import br.com.folhaPag.enums.Parentesco;
 public class Dependente extends Pessoa {
 
 	private Parentesco parentesco;
+	private final Double valor = 189.59;
+	
 
 	public Dependente(String nome, String cpf, LocalDate dataNascimento, Parentesco parentesco) {
 
@@ -25,6 +27,10 @@ public class Dependente extends Pessoa {
 
 	public void setParentesco(Parentesco parentesco) {
 		this.parentesco = parentesco;
+	}
+
+	public Double getValor() {
+		return valor;
 	}
 
 }
