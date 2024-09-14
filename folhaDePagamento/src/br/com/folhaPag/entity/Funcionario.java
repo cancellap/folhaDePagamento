@@ -1,6 +1,7 @@
 package br.com.folhaPag.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import br.com.folhaPag.enums.EnumIR;
 import br.com.folhaPag.enums.EnumInss;
@@ -12,25 +13,46 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 	private Double salarioBruto;
 	private Double descontoInss;
 	private Double descontoIR;
-	private Dependente dependente;
+	private List<Dependente> dependentes;
+	private Double soma;
 
-	public Funcionario(String nome, String cpf, LocalDate dataNascimento, Double salarioBruto) {
+	public Funcionario(String nome, String cpf, LocalDate dataNascimento, Double salarioBruto,
+			List<Dependente> dependentes) {
 		super(nome, cpf, dataNascimento);
 		this.salarioBruto = salarioBruto;
-	}
-
-	public Dependente getDependente() {
-		return dependente;
-	}
-
-	public void setDependente(Dependente dependente) {
-		this.dependente = dependente;
+		this.dependentes = dependentes;
 	}
 
 	@Override
 	public String toString() {
-		return "Funcionario [salarioBruto=" + salarioBruto + ", descontoInss=" + descontoInss + ", descontoIR="
-				+ descontoIR + ", dependente=" + dependente + "]";
+		return "SalarioBruto: " + salarioBruto + ", descontoInss: " + descontoInss + ", descontoIR: " + descontoIR
+				+ ", dependente: " + dependentes;
+	}
+
+	public List<Dependente> getDependente() {
+		return dependentes;
+	}
+
+	public Double getSoma() {
+		return soma;
+	}
+
+	public void setDependente(List<Dependente> dependente) {
+		this.dependentes = dependente;
+	}
+
+	public Double somaDependente() {
+
+		if (dependentes == null || dependentes.isEmpty()) {
+			soma = 0.0; // Se não houver dependentes, retorna 0
+			return soma;
+		}
+
+		soma = 0.0;
+		for (Dependente dp : dependentes) {
+			soma += dp.getValor();
+		}
+		return this.soma;
 	}
 
 	public Double getSalarioBruto() {
@@ -60,6 +82,7 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 
 	@Override
 	public Double calculoInss() {
+		descontoInss = 0.;
 		if (this.salarioBruto <= 1412.0) {
 			descontoInss = this.salarioBruto * (EnumInss.C1.getAliquota() / 100) - EnumInss.C1.getDeducao();
 
@@ -70,7 +93,7 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 			descontoInss = this.salarioBruto * (EnumInss.C3.getAliquota() / 100) - EnumInss.C3.getDeducao();
 
 		} else if (this.salarioBruto <= 7786.02 || this.salarioBruto >= 7786.02) {
-			descontoInss = this.salarioBruto * (EnumInss.C4.getAliquota() / 100) - EnumInss.C4.getDeducao();
+			descontoInss = 7786.02 * (EnumInss.C4.getAliquota() / 100) - EnumInss.C4.getDeducao();
 		}
 
 		return descontoInss;
@@ -79,24 +102,29 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 
 	@Override
 	public Double calculoIR() {
+		this.somaDependente();
 		if (this.salarioBruto <= 2259.0) {
 			descontoIR = 0.0;
-			
+
 		} else if (this.salarioBruto <= 2826.65) {
-			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C2.getAliquota() / 100) - EnumIR.C2.getDecucao();
-						
+			descontoIR = (((this.salarioBruto - this.soma - this.descontoInss) * EnumIR.C2.getAliquota() / 100)
+					- EnumIR.C2.getDecucao());
+
 		} else if (this.salarioBruto <= 3751.05) {
-			descontoIR =  ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C3.getAliquota() / 100) - EnumIR.C3.getDecucao();
-			
+			descontoIR = (((this.salarioBruto - this.soma - this.descontoInss) * EnumIR.C3.getAliquota() / 100)
+					- EnumIR.C3.getDecucao());
+
 		} else if (this.salarioBruto <= 4664.68) {
-			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C4.getAliquota() / 100) - EnumIR.C4.getDecucao();
-			
+			descontoIR = (((this.salarioBruto - this.soma - this.descontoInss) * EnumIR.C4.getAliquota() / 100)
+					- EnumIR.C4.getDecucao());
+
 		} else if (this.salarioBruto <= 4664.68 || this.salarioBruto >= 4664.68) {
-			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C5.getAliquota() / 100) - EnumIR.C5.getDecucao();
-			
+			descontoIR = (((this.salarioBruto - this.soma - this.descontoInss) * EnumIR.C5.getAliquota() / 100)
+					- EnumIR.C5.getDecucao());
+
 		}
-			
-			return descontoIR; 
+
+		return descontoIR;
 	}
 
 }
