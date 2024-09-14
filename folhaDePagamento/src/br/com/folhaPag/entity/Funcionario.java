@@ -81,22 +81,26 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 	public Double calculoIR() {
 		if (this.salarioBruto <= 2259.0) {
 			descontoIR = 0.0;
-			
+
 		} else if (this.salarioBruto <= 2826.65) {
-			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C2.getAliquota() / 100) - EnumIR.C2.getDecucao();
-						
+			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C2.getAliquota()
+					/ 100) - EnumIR.C2.getDecucao();
+
 		} else if (this.salarioBruto <= 3751.05) {
-			descontoIR =  ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C3.getAliquota() / 100) - EnumIR.C3.getDecucao();
-			
+			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C3.getAliquota()
+					/ 100) - EnumIR.C3.getDecucao();
+
 		} else if (this.salarioBruto <= 4664.68) {
-			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C4.getAliquota() / 100) - EnumIR.C4.getDecucao();
-			
+			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C4.getAliquota()
+					/ 100) - EnumIR.C4.getDecucao();
+
 		} else if (this.salarioBruto <= 4664.68 || this.salarioBruto >= 4664.68) {
-			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C5.getAliquota() / 100) - EnumIR.C5.getDecucao();
-			
+			descontoIR = ((this.salarioBruto - dependente.getValor() - this.descontoInss) * EnumIR.C5.getAliquota()
+					/ 100) - EnumIR.C5.getDecucao();
+
 		}
-			
-			return descontoIR; 
+
+		return descontoIR;
 	}
 
 }
