@@ -15,6 +15,7 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 	private Double descontoIR;
 	private List<Dependente> dependentes;
 	private Double soma;
+	
 
 	public Funcionario(String nome, String cpf, LocalDate dataNascimento, Double salarioBruto,
 			List<Dependente> dependentes) {
@@ -23,11 +24,19 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 		this.dependentes = dependentes;
 	}
 
+	
+
+
+
 	@Override
 	public String toString() {
-		return "SalarioBruto: " + salarioBruto + ", descontoInss: " + descontoInss + ", descontoIR: " + descontoIR
-				+ ", dependente: " + dependentes;
+		return super.toString() + "Funcionario [salarioBruto=" + salarioBruto + ", descontoInss=" + descontoInss + ", descontoIR="
+				+ descontoIR + "dependentes";
 	}
+
+
+
+
 
 	public List<Dependente> getDependente() {
 		return dependentes;
