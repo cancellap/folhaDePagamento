@@ -92,7 +92,9 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 		} else if (this.salarioBruto <= 4000.03) {
 			descontoInss = this.salarioBruto * (EnumInss.C3.getAliquota() / 100) - EnumInss.C3.getDeducao();
 
-		} else if (this.salarioBruto <= 7786.02 || this.salarioBruto >= 7786.02) {
+		} else if (this.salarioBruto <= 7786.02) {
+			descontoInss = this.salarioBruto * (EnumInss.C4.getAliquota() / 100) - EnumInss.C4.getDeducao();
+		}else {
 			descontoInss = 7786.02 * (EnumInss.C4.getAliquota() / 100) - EnumInss.C4.getDeducao();
 		}
 
@@ -118,10 +120,9 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 			descontoIR = (((this.salarioBruto - this.soma - this.descontoInss) * EnumIR.C4.getAliquota() / 100)
 					- EnumIR.C4.getDecucao());
 
-		} else if (this.salarioBruto <= 4664.68 || this.salarioBruto >= 4664.68) {
+		} else if (this.salarioBruto >= 4664.68) {
 			descontoIR = (((this.salarioBruto - this.soma - this.descontoInss) * EnumIR.C5.getAliquota() / 100)
 					- EnumIR.C5.getDecucao());
-
 		}
 
 		return descontoIR;
