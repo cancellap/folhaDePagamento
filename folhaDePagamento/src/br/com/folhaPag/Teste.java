@@ -1,41 +1,49 @@
 package br.com.folhaPag;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.folhaPag.entity.Dependente;
 import br.com.folhaPag.entity.Funcionario;
-import br.com.folhaPag.enums.Parentesco;
 
 public class Teste {
 
 	public static void main(String[] args) {
 
-		List<Dependente> dependentes = new ArrayList<>();
-		List<Funcionario> funcionarios = new ArrayList<>();
+		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+		List<Dependente> dependentes = new ArrayList<Dependente>();
+		try {
 
-		Funcionario funcionario = new Funcionario("Carlos Silva", "111.222.333-44", LocalDate.of(1985, 6, 15), 6500.00, dependentes);
-		
-		funcionarios.add(funcionario);
+			FileReader fr = new FileReader("C:\\Users\\PUBLICO\\Desktop\\serratec\\funcionarios.csv");// classe que faz
+																										// a leitura de
+																										// arquivo.
+			BufferedReader br = new BufferedReader(fr);
 
-		Dependente dependente1 = new Dependente("João", "123.456.789-01", LocalDate.of(2015, 5, 10), Parentesco.FILHO, funcionario);
-		Dependente dependente2 = new Dependente("Maria", "987.654.321-09", LocalDate.of(2012, 3, 22), Parentesco.SOBRINHO, funcionario);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			while (br.ready()) {
+				String linha = br.readLine();
+				if (!linha.isEmpty()) {
+					String dados[] = linha.split(";");
 
-		dependentes.add(dependente1);
-		dependentes.add(dependente2);
+					String nome = dados[0];
+					String cpf = dados[1];
+					LocalDate dataNasc = LocalDate.parse(dados[2], formatter);
+					Double salario = Double.parseDouble(dados[3]);
 
-		// System.out.println("Funcionário criado: " + funcionario.getNome());
+					Funcionario funcionario = new Funcionario(nome, cpf, dataNasc, salario, dependentes);
+					funcionarios.add(funcionario);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Deu ruim");
+		}
+		System.out.println(funcionarios);
 
-
-		System.out.println("Salário Bruto: " + funcionario.getSalarioBruto());
-		System.out.println("Desconto INSS: " + funcionario.calculoInss());
-		System.out.println("Desconto IR: " + funcionario.calculoIR());
-
-		System.out.println("Dependentes do funcionário: " + funcionario.getDependente());
-		
-
-		funcionario.somaDependente();
 	}
 
 }
