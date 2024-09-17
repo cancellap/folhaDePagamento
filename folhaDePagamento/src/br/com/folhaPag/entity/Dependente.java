@@ -9,8 +9,7 @@ public class Dependente extends Pessoa {
 	private Parentesco parentesco;
 	private final Double valor = 189.59;
 
-	public Dependente(String nome, String cpf, LocalDate dataNascimento, Parentesco parentesco,
-			Funcionario funcionario) {
+	public Dependente(String nome, String cpf, LocalDate dataNascimento, Parentesco parentesco) {
 		super(nome, cpf, dataNascimento);
 		this.parentesco = parentesco;
 	}
