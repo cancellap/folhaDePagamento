@@ -1,8 +1,10 @@
 package br.com.folhaPag.entity;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import br.com.folhaPag.enums.Parentesco;
+import br.com.folhaPag.exception.DependenteException;
 
 public class Dependente extends Pessoa {
 
@@ -16,8 +18,8 @@ public class Dependente extends Pessoa {
 
 	@Override
 	public String toString() {
-		
-		return super.toString()+ "Dependente: " + parentesco;
+
+		return super.toString() + ", Dependente: " + parentesco;
 	}
 
 	public Parentesco getParentesco() {
@@ -32,4 +34,12 @@ public class Dependente extends Pessoa {
 		return valor;
 	}
 
+	public void calculoIdade(LocalDate dataNascimento) throws DependenteException {
+		LocalDate dataAtual = LocalDate.now();
+		int idade = Period.between(dataNascimento, dataAtual).getYears();
+		if (idade >= 18) {
+			throw new DependenteException("Exceção: O dependente deve ter menos de 18 anos de idade.");
+		}
+	}
+	
 }
