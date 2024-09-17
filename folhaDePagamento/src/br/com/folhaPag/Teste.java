@@ -10,11 +10,14 @@ public class Teste {
 	public static void main(String[] args) {
 
 		LeitorDeArquivo leitor = new LeitorDeArquivo();
-		List<Funcionario> funcionarios = leitor.lerFuncionarios("C:/curso/funcionarios.csv");
+		List<Funcionario> funcionarios = leitor.lerFuncionarios("C:/Curso/funcionarios.csv");
 		
 		for (Funcionario funcionario : funcionarios) {
+			funcionario.calculoInss();
+			funcionario.calculoIR();
 			System.out.println(funcionario);
-		}
+		}		
+		
 	}
-
+	
 }
