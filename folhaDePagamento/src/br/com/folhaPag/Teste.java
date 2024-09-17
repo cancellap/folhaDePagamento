@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.com.folhaPag.entity.Dependente;
@@ -29,7 +28,6 @@ public class Teste {
 				String linha = br.readLine();
 				if (!linha.isEmpty()) {
 					String dados[] = linha.split(";");
-
 					String nome = dados[0];
 					String cpf = dados[1];
 					LocalDate dataNasc = LocalDate.parse(dados[2], formatter);
@@ -39,6 +37,7 @@ public class Teste {
 					funcionarios.add(funcionario);
 				}
 			}
+			br.close();
 		} catch (Exception e) {
 			System.out.println("Deu ruim");
 		}
