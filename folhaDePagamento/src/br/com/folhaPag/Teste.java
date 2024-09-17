@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.com.folhaPag.entity.Dependente;
 import br.com.folhaPag.entity.Funcionario;
+import br.com.folhaPag.enums.Parentesco;
 
 public class Teste {
 
@@ -36,12 +37,28 @@ public class Teste {
 					Funcionario funcionario = new Funcionario(nome, cpf, dataNasc, salario, dependentes);
 					funcionarios.add(funcionario);
 				}
+
+				while (br.ready()) {
+					 linha = br.readLine();
+					if (linha.isEmpty()) {
+						break;
+					}
+					
+					String dadosdp[] = linha.split(";");
+					String nome = dadosdp[0];
+					String cpf = dadosdp[1];
+					LocalDate dataNasc = LocalDate.parse(dadosdp[2], formatter);
+					Parentesco parentesco = Parentesco.valueOf(dadosdp[3]);
+					Dependente dependente = new Dependente(nome, cpf, dataNasc, parentesco);
+					dependentes.add(dependente);
+				}
 			}
 			br.close();
 		} catch (Exception e) {
 			System.out.println("Deu ruim");
+			e.printStackTrace();
 		}
-		System.out.println(funcionarios);
+		System.out.println(dependentes);
 
 	}
 
