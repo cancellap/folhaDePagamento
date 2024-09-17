@@ -1,6 +1,7 @@
 package br.com.folhaPag.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public abstract class Pessoa {
 
@@ -9,7 +10,6 @@ public abstract class Pessoa {
 	protected LocalDate dataNascimento;
 
 	public Pessoa(String nome, String cpf, LocalDate dataNascimento) {
-		super();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
