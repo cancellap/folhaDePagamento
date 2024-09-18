@@ -17,7 +17,7 @@ public abstract class Pessoa {
 
 	@Override
 	public String toString() {
-		return "Nome: " + nome + ", CPF: " + cpf + ", Data de Nascimento: " + dataNascimento;
+		return " Nome: " + nome + "; CPF: " + cpf + "; Data de Nascimento: " + dataNascimento;
 	}
 
 	public String getNome() {

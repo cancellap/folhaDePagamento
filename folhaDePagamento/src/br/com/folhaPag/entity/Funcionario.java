@@ -1,5 +1,6 @@
 package br.com.folhaPag.entity;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 	private Double descontoIR;
 	private List<Dependente> dependentes;
 	private Double soma;
+	private Double salarioLiquido;
 
 	public Funcionario(String nome, String cpf, LocalDate dataNascimento, Double salarioBruto,
 			List<Dependente> dependentes) {
@@ -29,15 +31,21 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", Salário Bruto: " + salarioBruto + ", Desconto Inss:" + descontoInss + ", Desconto IR: "
-				+ descontoIR + "\n " + dependentes;
+		return super.toString() + "; Salário Bruto: " + salarioBruto + "; Desconto Inss:"
+				+ String.format("%.2f", descontoInss) + "; Desconto IR: " + String.format("%.2f", descontoIR) + "\n "
+				+ dependentes;
 	}
 
 	public Double getSoma() {
 		return soma;
 	}
 
+	public Double getSalarioLiquido() {
+		return salarioLiquido;
+	}
+
 	public List<Dependente> getDependentes() {
+
 		return dependentes;
 	}
 
@@ -132,8 +140,13 @@ public class Funcionario extends Pessoa implements Inss, ImpostoRenda {
 		if (descontoIR < 0) {
 			descontoIR = 0.0;
 		}
+
 		return descontoIR;
 
+	}
+
+	public Double calcularSalarioLiquido() {
+		return salarioBruto - descontoInss - descontoIR;
 	}
 
 }

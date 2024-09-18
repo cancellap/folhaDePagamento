@@ -21,7 +21,9 @@ public class LeitorDeArquivo {
 		List<Funcionario> funcionarios = new ArrayList<>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
-		try (FileReader fr = new FileReader(caminhoArquivo); BufferedReader br = new BufferedReader(fr)) {
+		try {
+			FileReader fr = new FileReader(caminhoArquivo);
+			BufferedReader br = new BufferedReader(fr);
 			while (br.ready()) {
 				String linha = br.readLine();
 				if (!linha.isEmpty()) {
@@ -55,7 +57,7 @@ public class LeitorDeArquivo {
 							String cpfDep = dadosdp[1];
 							LocalDate dataNascDep = LocalDate.parse(dadosdp[2], formatter);
 							Parentesco parentesco = Parentesco.valueOf(dadosdp[3]);
-							
+
 							Dependente dependente = new Dependente(nomeDp, cpfDep, dataNascDep, parentesco);
 							dependente.calculoIdade(dataNascDep);
 							cpfRepetido(funcionario.getDependentes(), cpfDep);
