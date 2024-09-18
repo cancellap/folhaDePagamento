@@ -12,6 +12,7 @@ import br.com.folhaPag.entity.Funcionario;
 import br.com.folhaPag.entity.Pessoa;
 import br.com.folhaPag.enums.Parentesco;
 import br.com.folhaPag.exception.CpfException;
+import br.com.folhaPag.exception.DataNascimentoAnteriorException;
 import br.com.folhaPag.exception.DependenteException;
 
 public class LeitorDeArquivo {
@@ -70,12 +71,17 @@ public class LeitorDeArquivo {
 
 					}
 				}
+
+			}
+			try {
+				nascimentoAnterior(funcionarios);
+			} catch (DataNascimentoAnteriorException erro) {
+				System.err.println(erro.getMessage());
 			}
 
 		} catch (Exception e) {
-			System.err.println("Erro na leitura do arquivo");
+			System.err.println("Erro na leitura do arquivo.");
 		}
-
 		return funcionarios;
 	}
 
@@ -86,5 +92,28 @@ public class LeitorDeArquivo {
 			}
 		}
 
+	}
+
+	public void nascimentoAnterior(List<Funcionario> funcionarios) throws DataNascimentoAnteriorException {
+		boolean excecao = false;
+		String nomeFunc = null;
+
+		for (Funcionario func : funcionarios) {
+			LocalDate dataNascFunc = func.getDataNascimento();
+
+			for (Dependente dp : func.getDependentes()) {
+				if (dp.getDataNascimento().isBefore(dataNascFunc)) {
+					if (!excecao) {
+						nomeFunc = func.getNome();
+						excecao = true;
+					}
+					break;
+				}
+			}
+			if (excecao) {
+				throw new DataNascimentoAnteriorException("Exceção: Um dependente de " + nomeFunc
+						+ " tem uma data de nascimento anterior à do funcionário.");
+			}
+		}
 	}
 }
