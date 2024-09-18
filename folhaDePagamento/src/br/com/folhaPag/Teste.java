@@ -18,7 +18,7 @@ public class Teste {
 			funcionario.calculoIR();
 			System.out.println(funcionario);
 		}
-
+		
 		GravacaoArquivo ga = new GravacaoArquivo();
 		ga.escreverArquivo("C:/curso/funcionariossaida.txt", funcionarios);
 

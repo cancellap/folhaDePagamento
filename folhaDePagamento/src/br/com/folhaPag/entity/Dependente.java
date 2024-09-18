@@ -2,8 +2,10 @@ package br.com.folhaPag.entity;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 import br.com.folhaPag.enums.Parentesco;
+import br.com.folhaPag.exception.DataNascimentoAnteriorException;
 import br.com.folhaPag.exception.DependenteException;
 
 public class Dependente extends Pessoa {
@@ -41,5 +43,4 @@ public class Dependente extends Pessoa {
 			throw new DependenteException("Exceção: O dependente deve ter menos de 18 anos de idade.");
 		}
 	}
-
 }
