@@ -11,7 +11,7 @@ public class Teste {
 	public static void main(String[] args) {
 
 		LeitorDeArquivo leitor = new LeitorDeArquivo();
-		List<Funcionario> funcionarios = leitor.lerFuncionarios("C:/curso/funcionarios.csv");
+		List<Funcionario> funcionarios = leitor.lerFuncionarios("src./br/com/folhaPag/csv/funcionarios.csv");
 
 		for (Funcionario funcionario : funcionarios) {
 			funcionario.calculoInss();
@@ -20,7 +20,7 @@ public class Teste {
 		}
 
 		GravacaoArquivo ga = new GravacaoArquivo();
-		ga.escreverArquivo("C:/curso/funcionariossaida.txt", funcionarios);
+		ga.escreverArquivo("src./br/com/folhaPag/csv/funcionariossaida.csv", funcionarios);
 
 	}
 
