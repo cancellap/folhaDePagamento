@@ -5,9 +5,12 @@ import java.time.Period;
 import java.util.List;
 
 import br.com.folhaPag.enums.Parentesco;
+
 import br.com.folhaPag.exception.DataNascimentoAnteriorException;
 import br.com.folhaPag.exception.DependenteException;
 
+
+import br.com.folhaPag.exception.DependenteException;
 public class Dependente extends Pessoa {
 
 	private Parentesco parentesco;
